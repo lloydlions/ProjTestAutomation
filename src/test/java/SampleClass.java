@@ -1,3 +1,11 @@
+//import org.openqa.selenium.By;
+//import org.openqa.selenium.WebDriver;
+//import org.openqa.selenium.chrome.ChromeDriver;
+//import org.openqa.selenium.support.ui.ExpectedConditions;
+//import org.openqa.selenium.support.ui.WebDriverWait;
+//import org.testng.annotations.Test;
+
+import core.DriverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,9 +20,12 @@ public class SampleClass {
 
     @Test
     public void testRun(){
-        String path = System.getProperty("user.dir");
-        System.setProperty("webdriver.chrome.driver", path + "/lib/webdriver/chromedriver");
-        WebDriver driver = new ChromeDriver();
+//        String path = System.getProperty("user.dir");
+//        System.setProperty("webdriver.chrome.driver", path + "/lib/webdriver/chromedriver");
+//        WebDriver driver = new ChromeDriver();
+        DriverFactory df = new DriverFactory();
+        df.setBrowser("chrome");
+        WebDriver driver = df.initialize();
         driver.get("https://formy-project.herokuapp.com/form");
         WebDriverWait wait = new WebDriverWait(driver,30);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("first-name")));
