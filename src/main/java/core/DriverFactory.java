@@ -9,6 +9,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.testng.annotations.BeforeSuite;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class DriverFactory {
     private String browser;
@@ -21,7 +24,6 @@ public class DriverFactory {
     public void setBrowser(String browser) {
         this.browser = browser;
     }
-
 
     public WebDriver initialize() {
         WebDriver driver = null;
@@ -55,9 +57,25 @@ public class DriverFactory {
                 WebDriverManager.operadriver().setup();
                 driver = new OperaDriver();
                 break;
+            case "safari":
+                try {
+                    DriverManagerType safari = DriverManagerType.SAFARI;
+                    WebDriverManager.getInstance(safari).setup();
+                    Class<?> safariClass = Class.forName(safari.browserClass());
+                    driver = (WebDriver) safariClass.getDeclaredConstructor().newInstance();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
-
-
 
         return driver;
     }

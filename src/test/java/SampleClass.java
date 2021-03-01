@@ -23,9 +23,7 @@ public class SampleClass {
 //        String path = System.getProperty("user.dir");
 //        System.setProperty("webdriver.chrome.driver", path + "/lib/webdriver/chromedriver");
 //        WebDriver driver = new ChromeDriver();
-        DriverFactory df = new DriverFactory();
-        df.setBrowser("chrome");
-        WebDriver driver = df.initialize();
+        WebDriver driver = new DriverFactory().initialize();
         driver.get("https://formy-project.herokuapp.com/form");
         WebDriverWait wait = new WebDriverWait(driver,30);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("first-name")));
