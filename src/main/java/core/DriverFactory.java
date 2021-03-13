@@ -11,8 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
-import org.testng.annotations.BeforeSuite;
-import sun.java2d.loops.ProcessPath;
+import utilities.PropertyHelper;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,43 +19,31 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 public class DriverFactory {
-    private String browser;
-    private String headless;
     private String windowLength;
     private String windowHeight;
     Class<? extends WebDriver> driverClass = null;
-    FileInputStream fi;
-    Properties prop;
 
-    public String getPropValue(String key) throws Exception {
-        fi = new FileInputStream("./src/test/resources/config.properties");
-        prop = new Properties();
-        prop.load(fi);
+    // initialize driver; set headless browser
+    public WebDriver initialize(){
+        String headless = null;
+        String browser = null;
+        WebDriver driver = null;
+        try {
+            browser = PropertyHelper.getPropValue("browser").toUpperCase();
+            headless = PropertyHelper.getPropValue("headless");
 
-        return prop.getProperty(key);
-    }
-
-    public String getBrowserType(){
-        try{
             if(browser == null){
-                browser = "chrome";
-            }else{
-                browser = getPropValue("browser");
+                browser = "CHROME";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return browser;
-    }
-
-    public WebDriver initialize(){
-        WebDriver driver = null;
 
         try {
-            switch (getBrowserType().toUpperCase()){
+            switch (browser){
                 case "CHROME":
                     WebDriverManager.chromedriver().setup();
-                    if(getPropValue("headless").equals("yes")){
+                    if(headless.equals("yes")){
                         ChromeOptions chromeOptions = new ChromeOptions();
                         chromeOptions.addArguments("--headless");
                         chromeOptions.addArguments("--disable-gpu");
@@ -67,7 +54,7 @@ public class DriverFactory {
                     break;
                 case "FIREFOX":
                     WebDriverManager.firefoxdriver().setup();
-                    if(getPropValue("headless").equals("yes")){
+                    if(headless.equals("yes")){
                         FirefoxOptions ffOptions = new FirefoxOptions();
                         ffOptions.setHeadless(true);
                         driver = new FirefoxDriver(ffOptions);
