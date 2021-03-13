@@ -29,8 +29,8 @@ public class DriverFactory {
         String browser = null;
         WebDriver driver = null;
         try {
-            browser = PropertyHelper.getPropValue("browser").toUpperCase();
-            headless = PropertyHelper.getPropValue("headless");
+            browser = PropertyHelper.getPropValue("BROWSER").toUpperCase();
+            headless = PropertyHelper.getPropValue("HEADLESS");
 
             if(browser == null){
                 browser = "CHROME";
