@@ -1,5 +1,7 @@
 package utilities;
 
+import org.apache.log4j.PropertyConfigurator;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Properties;
@@ -19,5 +21,19 @@ public class PropertyHelper {
         prop = new Properties();
         prop.load(fi);
         return prop.getProperty(key);
+    }
+
+    public static void loadLog4jPropFile(){
+        try{
+            Properties props = new Properties();
+            props.load(new FileInputStream(System.getProperty("user.dir")
+                    + File.separator + "src"
+                    + File.separator + "main"
+                    + File.separator + "resources"
+                    + File.separator + "log4j.properties"));
+            PropertyConfigurator.configure(props);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

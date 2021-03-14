@@ -3,6 +3,8 @@ package core;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import io.github.bonigarcia.wdm.managers.ChromiumDriverManager;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -25,12 +27,15 @@ public class DriverFactory {
 
     // initialize driver; set headless browser
     public WebDriver initialize(){
+        final Logger LOGGER = LogManager.getLogger(DriverFactory.class);
+
         String headless = null;
         String browser = null;
         WebDriver driver = null;
         try {
             browser = PropertyHelper.getPropValue("BROWSER").toUpperCase();
             headless = PropertyHelper.getPropValue("HEADLESS");
+            LOGGER.info("BROWSER: " + browser);;
 
             if(browser == null){
                 browser = "CHROME";
@@ -44,6 +49,7 @@ public class DriverFactory {
                 case "CHROME":
                     WebDriverManager.chromedriver().setup();
                     if(headless.equals("yes")){
+                        LOGGER.info("ENABLE HEADLESS WEB DRIVER");
                         ChromeOptions chromeOptions = new ChromeOptions();
                         chromeOptions.addArguments("--headless");
                         chromeOptions.addArguments("--disable-gpu");
@@ -55,6 +61,7 @@ public class DriverFactory {
                 case "FIREFOX":
                     WebDriverManager.firefoxdriver().setup();
                     if(headless.equals("yes")){
+                        LOGGER.info("ENABLE HEADLESS WEB DRIVER");
                         FirefoxOptions ffOptions = new FirefoxOptions();
                         ffOptions.setHeadless(true);
                         driver = new FirefoxDriver(ffOptions);

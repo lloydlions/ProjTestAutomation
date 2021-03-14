@@ -27,17 +27,7 @@ public class SampleClass extends BaseTestCase {
     @Test
     public void testRun(){
 
-        loadUrl("https://formy-project.herokuapp.com/form");
-//        WebDriverWait wait = new WebDriverWait(driver,30);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("first-name")));
-//        driver.findElement(By.id("first-name")).sendKeys("First Name");
-//
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("last-name")));
-//        driver.findElement(By.id("last-name")).sendKeys("Last Name");
-//
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'Submit')]")));
-//        driver.findElement(By.xpath("//a[contains(text(),'Submit')]")).click();
-//        driver.close();
+
     }
     
 
