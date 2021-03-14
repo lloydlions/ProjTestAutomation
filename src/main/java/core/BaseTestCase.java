@@ -28,6 +28,7 @@ public class BaseTestCase {
 
             LOGGER.info("LAUNCH " + url);
             driver.get(url);
+            setMaximizeWindow();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,6 +41,7 @@ public class BaseTestCase {
 
             LOGGER.info("LAUNCH " + url);
             driver.get(url);
+            setMaximizeWindow();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -94,6 +96,19 @@ public class BaseTestCase {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             driver.findElement(By.xpath(identifier)).click();
+
+            LOGGER.info("LOCATE ELEMENT " + identifier + " THEN PERFORM CLICK");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //click by Link Text
+    public void clickElementByLinkText(String identifier){
+        try {
+            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(identifier)));
+            driver.findElement(By.linkText(identifier)).click();
 
             LOGGER.info("LOCATE ELEMENT " + identifier + " THEN PERFORM CLICK");
         }catch (Exception e){
@@ -177,6 +192,7 @@ public class BaseTestCase {
     ACTIONS VIA ACTIONS CLASS
      */
 
+    //ctrl + A
     public void keyEvent_SelectAll(){
         try {
             actions = new Actions(driver);
@@ -189,6 +205,7 @@ public class BaseTestCase {
         }
     }
 
+    //ctrl + C
     public void keyEvent_Copy(){
         try {
             actions = new Actions(driver);
@@ -201,6 +218,7 @@ public class BaseTestCase {
         }
     }
 
+    //ctrl + V
     public void keyEvent_Paste(){
         try {
             actions = new Actions(driver);
@@ -213,6 +231,7 @@ public class BaseTestCase {
         }
     }
 
+    //press Tab key
     public void keyEvent_PressTab(){
         try {
             actions = new Actions(driver);
@@ -223,6 +242,7 @@ public class BaseTestCase {
         }
     }
 
+    //drag and drop
     public void dragElementThenDropToById(String sourceId, String destinationId){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
@@ -234,7 +254,7 @@ public class BaseTestCase {
             WebElement destinationElement = driver.findElement(By.id(destinationId));
 
             actions = new Actions(driver);
-            actions.dragAndDrop(sourceElement,destinationElement)
+            actions.dragAndDrop(sourceElement,destinationElement);
 
             LOGGER.info("DRAG " + sourceElement + " TO " + destinationElement);
         }catch (Exception e){
@@ -246,7 +266,8 @@ public class BaseTestCase {
     ACTIONS VIA JAVASCRIPT EXECUTOR
      */
 
-    public void jsExecute_clickById(String identifier){
+    //click by id via js executor
+    public void jsExecute_ClickById(String identifier){
         try{
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
@@ -260,7 +281,8 @@ public class BaseTestCase {
         }
     }
 
-    public void jsExecute_clickByXpath(String identifier){
+    //click by xpath via js executor
+    public void jsExecute_ClickByXpath(String identifier){
         try{
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
@@ -274,11 +296,40 @@ public class BaseTestCase {
         }
     }
 
+    //enable field via Class Name
+    public void jsExecute_EnableTextFieldByClassName(String domIdentifier){
+        String script = "document.getElementsByClassName(" + domIdentifier + ")[1].removeAttribute('disabled')";
+        LOGGER.info("ENABLE FIELD " + domIdentifier + " VIA HTML DOM");
+
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript(script);
+    }
+
+    //enable field via Id
+    public void jsExecute_EnableTextFieldById(String domIdentifier){
+        String script = "document.getElementsById(" + domIdentifier + ")[1].removeAttribute('disabled')";
+        LOGGER.info("ENABLE FIELD " + domIdentifier + " VIA HTML DOM");
+
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript(script);
+    }
+
+    //enable field via Name
+    public void jsExecute_EnableTextFieldByName(String domIdentifier){
+        String script = "document.getElementsByName(" + domIdentifier + ")[1].removeAttribute('disabled')";
+        LOGGER.info("ENABLE FIELD " + domIdentifier + " VIA HTML DOM");
+
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+        js.executeScript(script);
+    }
+
     @AfterTest
     public void tearDown(){
-        LOGGER.info("SHUTTING DOWN WEB DRIVER");
-        driver.close();
-        driver.quit();
+        if(!driver.equals(null)){
+            LOGGER.info("SHUTTING DOWN WEB DRIVER");
+            driver.close();
+            driver.quit();
+        }
     }
 
     @BeforeTest
@@ -286,4 +337,7 @@ public class BaseTestCase {
         PropertyHelper.loadLog4jPropFile();
     }
 
+    private void setMaximizeWindow(){
+        driver.manage().window().maximize();
+    }
 }
