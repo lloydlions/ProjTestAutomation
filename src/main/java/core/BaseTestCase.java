@@ -3,14 +3,15 @@ package core;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import utilities.PropertyHelper;
+
+import java.util.ArrayList;
 
 public class BaseTestCase {
     final Logger LOGGER = LogManager.getLogger(BaseTestCase.class);
@@ -52,7 +53,7 @@ public class BaseTestCase {
      */
 
     //send keys by ID
-    public void inputValueByID(String identifier,String inputString){
+    protected void inputValueByID(String identifier,String inputString){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
@@ -65,7 +66,7 @@ public class BaseTestCase {
     }
 
     //send keys by Xpath
-    public void inputValueByXPATH(String identifier,String inputString){
+    protected void inputValueByXPATH(String identifier,String inputString){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
@@ -78,7 +79,7 @@ public class BaseTestCase {
     }
 
     //click by Id
-    public void clickElementByID(String identifier){
+    protected void clickElementByID(String identifier){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
@@ -91,7 +92,7 @@ public class BaseTestCase {
     }
 
     //click by Xpath
-    public void clickElementByXPATH(String identifier){
+    protected void clickElementByXPATH(String identifier){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
@@ -104,7 +105,7 @@ public class BaseTestCase {
     }
 
     //click by Link Text
-    public void clickElementByLinkText(String identifier){
+    protected void clickElementByLinkText(String identifier){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(identifier)));
@@ -117,7 +118,7 @@ public class BaseTestCase {
     }
 
     //select text by drop down Id
-    public void selectDropDownIdThenSelectByText(String identifier, String value){
+    protected void selectDropDownIdThenSelectByText(String identifier, String value){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
@@ -131,7 +132,7 @@ public class BaseTestCase {
     }
 
     //select text by drop down xpath
-    public void selectDropDownXpathThenSelectByText(String identifier, String value){
+    protected void selectDropDownXpathThenSelectByText(String identifier, String value){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
@@ -145,7 +146,7 @@ public class BaseTestCase {
     }
 
     //select value by drop down Id
-    public void selectDropDownIdThenSelectByValue(String identifier, String value){
+    protected void selectDropDownIdThenSelectByValue(String identifier, String value){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
@@ -159,7 +160,7 @@ public class BaseTestCase {
     }
 
     //select value by drop down xpath
-    public void selectDropDownXpathThenSelectByValue(String identifier, String value){
+    protected void selectDropDownXpathThenSelectByValue(String identifier, String value){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
@@ -173,7 +174,7 @@ public class BaseTestCase {
     }
 
     //calendar picker by value ---- ex. yyyy/mm/dd TAb hh:mm AM/PM
-    public void enterDateByValues(String identifier, String date, String time){
+    protected void enterDateByValues(String identifier, String date, String time){
         try{
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
@@ -193,7 +194,7 @@ public class BaseTestCase {
      */
 
     //ctrl + A
-    public void keyEvent_SelectAll(){
+    protected void keyEvent_SelectAll(){
         try {
             actions = new Actions(driver);
             actions.keyDown(Keys.CONTROL);
@@ -206,7 +207,7 @@ public class BaseTestCase {
     }
 
     //ctrl + C
-    public void keyEvent_Copy(){
+    protected void keyEvent_Copy(){
         try {
             actions = new Actions(driver);
             actions.keyDown(Keys.CONTROL);
@@ -219,7 +220,7 @@ public class BaseTestCase {
     }
 
     //ctrl + V
-    public void keyEvent_Paste(){
+    protected void keyEvent_Paste(){
         try {
             actions = new Actions(driver);
             actions.keyDown(Keys.CONTROL);
@@ -232,7 +233,7 @@ public class BaseTestCase {
     }
 
     //press Tab key
-    public void keyEvent_PressTab(){
+    protected void keyEvent_PressTab(){
         try {
             actions = new Actions(driver);
             actions.sendKeys(Keys.TAB);
@@ -243,7 +244,7 @@ public class BaseTestCase {
     }
 
     //drag and drop
-    public void dragElementThenDropToById(String sourceId, String destinationId){
+    protected void dragElementThenDropToById(String sourceId, String destinationId){
         try {
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(sourceId)));
@@ -262,12 +263,26 @@ public class BaseTestCase {
         }
     }
 
+    //get text via html element
+    protected String getElementTextByXpath(String identifier){
+        String text = null;
+        try {
+            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
+            text = driver.findElement(By.xpath(identifier)).getText();
+            LOGGER.info("PAGE TITLE: " + text );
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return text;
+    }
+
     /*
     ACTIONS VIA JAVASCRIPT EXECUTOR
      */
 
     //click by id via js executor
-    public void jsExecute_ClickById(String identifier){
+    protected void jsExecute_ClickById(String identifier){
         try{
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
@@ -282,7 +297,7 @@ public class BaseTestCase {
     }
 
     //click by xpath via js executor
-    public void jsExecute_ClickByXpath(String identifier){
+    protected void jsExecute_ClickByXpath(String identifier){
         try{
             wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
@@ -297,7 +312,7 @@ public class BaseTestCase {
     }
 
     //enable field via Class Name
-    public void jsExecute_EnableTextFieldByClassName(String domIdentifier){
+    protected void jsExecute_EnableTextFieldByClassName(String domIdentifier){
         String script = "document.getElementsByClassName(" + domIdentifier + ")[1].removeAttribute('disabled')";
         LOGGER.info("ENABLE FIELD " + domIdentifier + " VIA HTML DOM");
 
@@ -306,7 +321,7 @@ public class BaseTestCase {
     }
 
     //enable field via Id
-    public void jsExecute_EnableTextFieldById(String domIdentifier){
+    protected void jsExecute_EnableTextFieldById(String domIdentifier){
         String script = "document.getElementsById(" + domIdentifier + ")[1].removeAttribute('disabled')";
         LOGGER.info("ENABLE FIELD " + domIdentifier + " VIA HTML DOM");
 
@@ -315,7 +330,7 @@ public class BaseTestCase {
     }
 
     //enable field via Name
-    public void jsExecute_EnableTextFieldByName(String domIdentifier){
+    protected void jsExecute_EnableTextFieldByName(String domIdentifier){
         String script = "document.getElementsByName(" + domIdentifier + ")[1].removeAttribute('disabled')";
         LOGGER.info("ENABLE FIELD " + domIdentifier + " VIA HTML DOM");
 
@@ -323,7 +338,12 @@ public class BaseTestCase {
         js.executeScript(script);
     }
 
-    @AfterTest
+    protected void switchHandle(int index){
+        ArrayList<String> tabs_windows = new ArrayList<String> (driver.getWindowHandles());
+        driver.switchTo().window(tabs_windows.get(index));
+    }
+
+    @AfterClass
     public void tearDown(){
         if(!driver.equals(null)){
             LOGGER.info("SHUTTING DOWN WEB DRIVER");
