@@ -24,7 +24,6 @@ public class AlertTabsPage extends BasePage {
     public void clickOpenNewTab(){
         clickElementByID(newTabBtn);
         closeTabIfNotSwitchWindow();
-//        Assert.assertEquals(getPageTitle(),"Welcome to Formy");
     }
 
     public void closeTabIfNotSwitchWindow(){
