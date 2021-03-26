@@ -26,7 +26,7 @@ public class DriverFactory {
     Class<? extends WebDriver> driverClass = null;
 
     // initialize driver; set headless browser
-    public WebDriver initialize(){
+    public static WebDriver initialize(){
         final Logger LOGGER = LogManager.getLogger(DriverFactory.class);
 
         String headless = null;

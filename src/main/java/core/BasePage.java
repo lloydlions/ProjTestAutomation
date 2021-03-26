@@ -13,15 +13,22 @@ import utilities.PropertyHelper;
 
 import java.util.ArrayList;
 
-public class BaseTestCase {
-    final Logger LOGGER = LogManager.getLogger(BaseTestCase.class);
-    WebDriver driver;
-    String url;
-    WebDriverWait wait = null;
-    Actions actions;
+public class BasePage {
+    final Logger LOGGER = LogManager.getLogger(BasePage.class);
+    protected static WebDriver driver;
+    protected WebDriverWait wait = null;
+    protected Actions actions;
+    private String url;
 
-    public void loadUrl(String url){
-        driver = new DriverFactory().initialize();
+    protected BasePage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    protected WebDriver getDriver(){
+        return driver;
+    }
+
+    protected void loadUrl(String url){
         try {
             if(url.equals(null)) {
                 url = PropertyHelper.getPropValue("URL");
@@ -35,8 +42,7 @@ public class BaseTestCase {
         }
     }
 
-    public void loadUrl(){
-        driver = new DriverFactory().initialize();
+    protected void loadUrl(){
         try {
             url = PropertyHelper.getPropValue("URL");
 

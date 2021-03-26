@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import pageobject.AlertTabsPage;
 
 public class TestAlertTabs {
-
     AlertTabsPage alertTabsPage;
 
     @Test
