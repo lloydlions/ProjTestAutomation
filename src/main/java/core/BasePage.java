@@ -349,7 +349,22 @@ public class BasePage {
         driver.switchTo().window(tabs_windows.get(index));
     }
 
-    @AfterClass
+    protected void dragAndDrop(String item, String target){
+        try{
+            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(item)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(target)));
+            Actions act=new Actions(driver);
+            act.dragAndDrop(
+                            driver.findElement(By.xpath(item)),
+                            driver.findElement(By.xpath(target)))
+                    .build().perform();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @AfterClass(alwaysRun=true)
     public void tearDown(){
         if(!driver.equals(null)){
             LOGGER.info("SHUTTING DOWN WEB DRIVER");
@@ -358,7 +373,7 @@ public class BasePage {
         }
     }
 
-    @BeforeTest
+    @BeforeTest(alwaysRun=true)
     public void initializeTestFramework(){
         PropertyHelper.loadLog4jPropFile();
     }

@@ -27,7 +27,7 @@ public class AlertTabsPage extends BasePage {
     }
 
     public void closeTabIfNotSwitchWindow(){
-        //reatain parent tab, then close other tabs
+        //retain parent tab, then close other tabs
         driver = getDriver();
         ArrayList<String> tabs_windows = new ArrayList<String> (driver.getWindowHandles());
         for(int i = 1; i < tabs_windows.toArray().length; i++){
@@ -35,6 +35,13 @@ public class AlertTabsPage extends BasePage {
             driver.close();
         }
         driver.switchTo().window(tabs_windows.get(0));
+    }
+
+    public void clickOpenAlert(){
+        clickElementByID(alertBtn);
+
+        driver = getDriver();
+        driver.switchTo().alert().accept();
     }
 
     private String getPageTitle(){
