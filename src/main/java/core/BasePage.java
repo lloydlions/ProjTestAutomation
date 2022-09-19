@@ -11,6 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import utilities.PropertyHelper;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class BasePage {
@@ -19,6 +20,14 @@ public class BasePage {
     protected WebDriverWait wait = null;
     protected Actions actions;
     private String url;
+
+    private final Duration setTimeOut() {
+        Duration seconds = Duration.ofSeconds(1);
+        try{
+            seconds = Duration.ofSeconds(Long.parseLong(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+        }catch (Exception e){}
+        return seconds;
+    }
 
     protected BasePage(WebDriver driver) {
         this.driver = driver;
@@ -61,7 +70,7 @@ public class BasePage {
     //send keys by ID
     protected void inputValueByID(String identifier,String inputString){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
             driver.findElement(By.id(identifier)).sendKeys(inputString);
 
@@ -74,7 +83,7 @@ public class BasePage {
     //send keys by Xpath
     protected void inputValueByXPATH(String identifier,String inputString){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             driver.findElement(By.xpath(identifier)).sendKeys(inputString);
 
@@ -87,7 +96,7 @@ public class BasePage {
     //click by Id
     protected void clickElementByID(String identifier){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
             driver.findElement(By.id(identifier)).click();
 
@@ -100,7 +109,7 @@ public class BasePage {
     //click by Xpath
     protected void clickElementByXPATH(String identifier){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             driver.findElement(By.xpath(identifier)).click();
 
@@ -113,7 +122,7 @@ public class BasePage {
     //click by Link Text
     protected void clickElementByLinkText(String identifier){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(identifier)));
             driver.findElement(By.linkText(identifier)).click();
 
@@ -126,7 +135,7 @@ public class BasePage {
     //select text by drop down Id
     protected void selectDropDownIdThenSelectByText(String identifier, String value){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
             Select dropDown = new Select(driver.findElement(By.id(identifier)));
             dropDown.selectByVisibleText(value);
@@ -140,7 +149,7 @@ public class BasePage {
     //select text by drop down xpath
     protected void selectDropDownXpathThenSelectByText(String identifier, String value){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             Select dropDown = new Select(driver.findElement(By.xpath(identifier)));
             dropDown.selectByVisibleText(value);
@@ -154,7 +163,7 @@ public class BasePage {
     //select value by drop down Id
     protected void selectDropDownIdThenSelectByValue(String identifier, String value){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
             Select dropDown = new Select(driver.findElement(By.id(identifier)));
             dropDown.selectByValue(value);
@@ -168,7 +177,7 @@ public class BasePage {
     //select value by drop down xpath
     protected void selectDropDownXpathThenSelectByValue(String identifier, String value){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             Select dropDown = new Select(driver.findElement(By.xpath(identifier)));
             dropDown.selectByValue(value);
@@ -182,7 +191,7 @@ public class BasePage {
     //calendar picker by value ---- ex. yyyy/mm/dd TAb hh:mm AM/PM
     protected void enterDateByValues(String identifier, String date, String time){
         try{
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             WebElement datePicker = driver.findElement(By.xpath(identifier));
             datePicker.sendKeys(date);
@@ -252,11 +261,11 @@ public class BasePage {
     //drag and drop
     protected void dragElementThenDropToById(String sourceId, String destinationId){
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(sourceId)));
             WebElement sourceElement = driver.findElement(By.id(sourceId));
 
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(destinationId)));
             WebElement destinationElement = driver.findElement(By.id(destinationId));
 
@@ -273,7 +282,7 @@ public class BasePage {
     protected String getElementTextByXpath(String identifier){
         String text = null;
         try {
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             text = driver.findElement(By.xpath(identifier)).getText();
             LOGGER.info("PAGE TITLE: " + text );
@@ -290,7 +299,7 @@ public class BasePage {
     //click by id via js executor
     protected void jsExecute_ClickById(String identifier){
         try{
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(identifier)));
             WebElement element = driver.findElement(By.id(identifier));
             JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -305,7 +314,7 @@ public class BasePage {
     //click by xpath via js executor
     protected void jsExecute_ClickByXpath(String identifier){
         try{
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(identifier)));
             WebElement element = driver.findElement(By.xpath(identifier));
             JavascriptExecutor executor = (JavascriptExecutor)driver;
@@ -351,7 +360,7 @@ public class BasePage {
 
     protected void dragAndDrop(String item, String target){
         try{
-            wait = new WebDriverWait(driver,Integer.parseInt(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
+            wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(item)));
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(target)));
             Actions act=new Actions(driver);

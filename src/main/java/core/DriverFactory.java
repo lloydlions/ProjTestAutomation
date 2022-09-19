@@ -69,38 +69,10 @@ public class DriverFactory {
                         driver = new FirefoxDriver();
                     }
                     break;
-                case "IE":
-//                driverClass = InternetExplorerDriver.class;
-                    WebDriverManager.iedriver().setup();
-                    driver = new InternetExplorerDriver();
-                    break;
                 case "EDGE" :
 //                driverClass = EdgeDriver.class;
                     WebDriverManager.edgedriver().setup();
                     driver = new EdgeDriver();
-                    break;
-                case "OPERA":
-//                driverClass = OperaDriver.class;
-                    WebDriverManager.operadriver().setup();
-                    driver = new OperaDriver();
-                    break;
-                case "SAFARI":
-                    try {
-                        DriverManagerType safari = DriverManagerType.SAFARI;
-                        WebDriverManager.getInstance(safari).setup();
-                        Class<?> safariClass = Class.forName(safari.browserClass());
-                        driver = (WebDriver) safariClass.getDeclaredConstructor().newInstance();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
                     break;
             }
         }catch (Exception e){
