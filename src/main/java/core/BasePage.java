@@ -373,12 +373,12 @@ public class BasePage {
         }
     }
 
-    //Actions via Webdriver By
-    protected void fillUpField(By inputElement, String text){
+    //Alternative approach, is to directly insert the locator instead of the String locators which can minimize code clutter
+    protected void clickWebElement(By inputElement){
         try{
             wait = new WebDriverWait(driver, this.setTimeOut());
             wait.until(ExpectedConditions.visibilityOfElementLocated(inputElement));
-            driver.findElement(inputElement).sendKeys(text);
+            driver.findElement(inputElement).click();
 
         }catch (Exception e){
             e.printStackTrace();
