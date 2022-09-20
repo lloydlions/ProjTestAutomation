@@ -12,5 +12,5 @@ Self Test Automation - Created from scratch. This framework does not completely 
    2. Drag and Drop - Status: Done
    3. File Upload - Status: Done
    4. Modal - Status: Done
-   5. WebForm - Status: Not Started
+   5. WebForm - Status: Done
 
