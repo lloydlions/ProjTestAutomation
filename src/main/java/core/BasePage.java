@@ -21,7 +21,7 @@ public class BasePage {
     protected Actions actions;
     private String url;
 
-    private final Duration setTimeOut() {
+    protected final Duration setTimeOut() {
         Duration seconds = Duration.ofSeconds(1);
         try{
             seconds = Duration.ofSeconds(Long.parseLong(PropertyHelper.getPropValue("TIMEOUTHANDLER")));
