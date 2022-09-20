@@ -5,7 +5,4 @@ Self Test Automation from scratch
 3. log4j - completed (for future enhancement config within config)
 4. BaseTestCase
 5. Sample Testcases (5.1) Alert and Tabs - Status: Not Started (5.2) Drag and Drop - Status: Not Started (5.3) Text Field Disabled - Status: Not Started (5.4) File Upload - Status: Not Started (5.5) Modal - Status: Not Started (5.6) WebForm - Status: Not Started
-6. empty
-7. empty
 
-end goal : https://techbeacon.com/app-dev-testing/10-portfolio-projects-aspiring-automation-engineers
