@@ -373,6 +373,18 @@ public class BasePage {
         }
     }
 
+    //Actions via Webdriver By
+    protected void fillUpField(By inputElement, String text){
+        try{
+            wait = new WebDriverWait(driver, this.setTimeOut());
+            wait.until(ExpectedConditions.visibilityOfElementLocated(inputElement));
+            driver.findElement(inputElement).sendKeys(text);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @AfterClass(alwaysRun=true)
     public void tearDown(){
         if(!driver.equals(null)){

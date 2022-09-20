@@ -4,5 +4,13 @@ Self Test Automation from scratch
 2. Enablement of config properties
 3. log4j - completed (for future enhancement config within config)
 4. BaseTestCase
-5. Sample Testcases (5.1) Alert and Tabs - Status: Not Started (5.2) Drag and Drop - Status: Not Started (5.3) Text Field Disabled - Status: Not Started (5.4) File Upload - Status: Not Started (5.5) Modal - Status: Not Started (5.6) WebForm - Status: Not Started
+   1. 2 Approach
+      1. Elements by String - old approach year 2019
+      2. Elements by Selenium - new approach year 2022
+5. Sample Testcases 
+   1. Alert and Tabs - Status: Done
+   2. Drag and Drop - Status: Done
+   3. File Upload - Status: Not Started 
+   4. Modal - Status: Not Started 
+   5. WebForm - Status: Not Started
 
